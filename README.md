@@ -14,7 +14,7 @@ install [NodeJS](https://nodejs.org/en/)
 
 npm install
 
-install [React Navigation](reactnavigation.org/docs/getting-started)
+install [React Navigation](reactnavigation.org/docs/getting-started) steps below
 
 npm install --global expo-cl
 
