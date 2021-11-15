@@ -7,23 +7,46 @@ import {
   Button,
 } from 'react-native';
 import SearchPage from './SearchPage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StackRouter } from 'react-navigation';
+import SearchResults from './SearchResults';
 
 //Functional Style
 function App() {
-  const [toggled, setToggled] = useState(false);
+  const Stack = createNativeStackNavigator();
 
-  const about = toggled ? <Text>TEST</Text> : null;
+  function HomeScreen({ navigation }) {
+    return (
+      <View>
+        <SearchPage />
+        <Button
+          onPress={() => setToggled(!toggled)}
+          // onPress={() => navigation.navigate('Details')}
+          color='#48BBEC'
+          title='Go'
+        />
+        {about}
+      </View>
+      // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      //   <Text>Home Screen</Text>
+      // </View>
+    );
+  }
+
+  function DetailsScreen() {
+    return (
+      <SearchResults />
+    )
+  }
 
   return (
-    <View>
-      <SearchPage />
-      <Button
-        onPress={() => setToggled(!toggled)}
-        color='#48BBEC'
-        title='Go'
-      />
-      {about}
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={SearchPage} />
+        <Stack.Screen name="Details" component={SearchResults} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

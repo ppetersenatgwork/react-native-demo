@@ -32,10 +32,13 @@ function urlForQueryAndPage(key, value, pageNumber) {
 }
 
 //Functional style
-function SearchPage() {
+function SearchPage({ navigation }) {
     const [searchString, setSearchString] = useState('london');
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [toggled, setToggled] = useState(false);
+  
+    const about = toggled ? <Text>TEST</Text> : null;
 
     function _executeQuery(query) {
         console.log(query);
@@ -47,6 +50,10 @@ function SearchPage() {
         //         setIsLoading(false)
         //         setMessage('Something bad happened ' + error)
         //     });
+
+        //Temporary code while API call is not working
+        const listings = [{ title: 'A Test Place', price_formatted: '$300,000,000 ', img_url: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' }];
+        navigation.navigate('Details', {listings})
         setIsLoading(false)
     };
 
@@ -55,13 +62,7 @@ function SearchPage() {
         setIsLoading(false)
         setMessage('')
         if (response.application_response_code.substr(0, 1) === '1') {
-            // this.props.navigator.push({
-            //     title: 'Results',
-            //     component: SearchResults,
-            //     passProps: {listings: response.listings}
-            //   });
-
-            console.log('Properties found: ' + response.listings.length);
+            navigation.navigate('Details', {listings: response.listings})
         } else {
             setMessage('Location not recognized; please try again.');
         }
@@ -69,8 +70,6 @@ function SearchPage() {
 
     const spinner = isLoading ?
         <ActivityIndicator size='large' color="#0000FF" /> : null;
-
-    const listings = [{ title: 'A Test Place', price_formatted: '$300,000,000 ', img_url: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' }];
 
     return (
         <View style={styles.container}>
@@ -96,7 +95,13 @@ function SearchPage() {
             <Image source={require('./resources/house.png')} style={styles.image} />
             {spinner}
             <Text style={styles.description}>{message}</Text>
-            <SearchResults listings={listings} />
+            {/* <SearchResults listings={listings} /> */}
+        <Button
+          onPress={() => setToggled(!toggled)}
+          color='#48BBEC'
+          title='Go'
+        />
+        {about}
         </View>
     );
 }

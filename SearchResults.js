@@ -16,7 +16,9 @@ import {
 import ListItem from './ListItem';
 
 //Functional style
-function SearchResults(props) {
+function SearchResults({route}) {
+  console.log(route)
+  console.log(route.params.listings)
 
   function _renderItem({ item, index }) {
     return (<ListItem
@@ -33,7 +35,7 @@ function SearchResults(props) {
 
   return (
     <FlatList
-      data={props.listings}
+      data={route.params.listings}
       keyExtractor={(item, index) => index}
       renderItem={_renderItem}
     />
